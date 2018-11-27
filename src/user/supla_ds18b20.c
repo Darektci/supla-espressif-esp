@@ -35,6 +35,7 @@
 
 
 static double supla_ds18b20_last_temp = -275;
+//static double tempx = 20;
 
 ETSTimer supla_ds18b20_timer1;
 ETSTimer supla_ds18b20_timer2;
@@ -208,6 +209,10 @@ void supla_get_temperature(char value[SUPLA_CHANNELVALUE_SIZE]) {
 	memcpy(value, &supla_ds18b20_last_temp, sizeof(double));
 }
 
+void supla_get_temperature2(char value[SUPLA_CHANNELVALUE_SIZE]) {
+	// Only temperature
+	//memcpy(value, &tempx, sizeof(double));
+}
 #endif
 
  

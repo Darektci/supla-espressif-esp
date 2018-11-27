@@ -33,6 +33,7 @@
 #include "supla_esp_pwm.h"
 #include "supla_dht.h"
 #include "supla_ds18b20.h"
+#include "supla_hc.h"
 #include "supla-dev/log.h"
 
 #include "board/supla_esp_board.c"
@@ -129,6 +130,10 @@ void MAIN_ICACHE_FLASH user_init(void)
      #ifdef DS18B20
 		 supla_ds18b20_init();
      #endif
+		 
+     #ifdef HC
+		 supla_hc_init();
+    #endif
 
      #ifdef DHTSENSOR
 		 supla_dht_init();
@@ -152,6 +157,10 @@ void MAIN_ICACHE_FLASH user_init(void)
     #ifdef DS18B20
 		supla_ds18b20_start();
     #endif
+		
+    #ifdef HC
+		supla_hc_start();
+    #endif
 
 	#ifdef DHTSENSOR
 		supla_dht_start();
@@ -166,7 +175,7 @@ void MAIN_ICACHE_FLASH user_init(void)
 	#endif
 
 /*
-	if ( supla_esp_state.ltag != 25 ) {
+ 	if ( supla_esp_state.ltag != 25 ) {
 		supla_log(LOG_DEBUG, "Log state reset");
 		memset(supla_esp_state.log, 0, 4000);
 		supla_esp_state.len = 0;

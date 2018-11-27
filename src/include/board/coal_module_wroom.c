@@ -87,29 +87,21 @@ const uint8_t rsa_public_key_bytes[512] = {
     0xa8, 0x3a, 0xeb, 0x99, 0x77, 0xbd, 0x0d, 0xb3
 };
 
-#if defined(__BOARD_gate_module_wroom)
+#if defined(__BOARD_coal_module_wroom)
 
 	#define B_CFG_PORT         13
-	#define B_RELAY1_PORT       4
-	#define B_RELAY2_PORT       5
+	//#define B_RELAY1_PORT       4
+	//#define B_RELAY2_PORT       5
 
-	#define B_SENSOR_PORT1     12
-	#define B_SENSOR_PORT2     14
+	//#define B_SENSOR_PORT1     12
+	//#define B_SENSOR_PORT2     14
 
-#else
-
-	#define B_CFG_PORT         13
-	#define B_RELAY1_PORT       4
-	#define B_RELAY2_PORT       5
-
-	#define B_SENSOR_PORT1     12
-	#define B_SENSOR_PORT2     14
 
 #endif
 
 void ICACHE_FLASH_ATTR supla_esp_board_set_device_name(char *buffer, uint8 buffer_size) {
 	
-	ets_snprintf(buffer, buffer_size, "SUPLA-GATE-MODULE DM");
+	ets_snprintf(buffer, buffer_size, "SUPLA-COAL-MODULE");
 	
 }
 
@@ -119,79 +111,79 @@ void ICACHE_FLASH_ATTR supla_esp_board_gpio_init(void) {
 	supla_input_cfg[0].gpio_id = B_CFG_PORT;
 	supla_input_cfg[0].flags = INPUT_FLAG_PULLUP | INPUT_FLAG_CFG_BTN;
 	
-	supla_input_cfg[1].type = INPUT_TYPE_SENSOR;
-	supla_input_cfg[1].gpio_id = B_SENSOR_PORT1;
-	supla_input_cfg[1].channel = 2;
+//	supla_input_cfg[1].type = INPUT_TYPE_SENSOR;
+//	supla_input_cfg[1].gpio_id = B_SENSOR_PORT1;
+//	supla_input_cfg[1].channel = 2;
 	
-	supla_input_cfg[2].type = INPUT_TYPE_SENSOR;
-	supla_input_cfg[2].gpio_id = B_SENSOR_PORT2;
-	supla_input_cfg[2].channel = 3;
+//	supla_input_cfg[2].type = INPUT_TYPE_SENSOR;
+//	supla_input_cfg[2].gpio_id = B_SENSOR_PORT2;
+//	supla_input_cfg[2].channel = 3;
 	
 	// ---------------------------------------
 	// ---------------------------------------
 
-    supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
-    supla_relay_cfg[0].flags = RELAY_FLAG_RESET;
-    supla_relay_cfg[0].channel = 0;
+ //   supla_relay_cfg[0].gpio_id = B_RELAY1_PORT;
+ //   supla_relay_cfg[0].flags = RELAY_FLAG_RESET;
+ //   supla_relay_cfg[0].channel = 0;
     
-    supla_relay_cfg[1].gpio_id = B_RELAY2_PORT;
-    supla_relay_cfg[1].flags = RELAY_FLAG_RESET;
-    supla_relay_cfg[1].channel = 1;
+ //   supla_relay_cfg[1].gpio_id = B_RELAY2_PORT;
+ //   supla_relay_cfg[1].flags = RELAY_FLAG_RESET;
+  //  supla_relay_cfg[1].channel = 1;
 
 }
 
 void  supla_esp_board_set_channels(TDS_SuplaDeviceChannel_B *channels, unsigned char *channel_count) {
 	
-	*channel_count = 6;
-
+	*channel_count = 2;
+  /*
 	channels[0].Number = 0;
 	channels[0].Type = SUPLA_CHANNELTYPE_RELAY;
 	channels[0].FuncList =  SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEGATEWAYLOCK \
 								| SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEGATE \
 								| SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEGARAGEDOOR \
-								| SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEDOORLOCK;
+			  		        	| SUPLA_BIT_RELAYFUNC_CONTROLLINGTHEDOORLOCK;
 	channels[0].Default = 0;
-	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT);
+	channels[0].value[0] = supla_esp_gpio_relay_on(B_RELAY1_PORT); */
 
+	//channels[1].Number = 1;
+	//channels[1].Type = channels[0].Type;
+	//channels[1].FuncList = channels[0].FuncList;
+	//channels[1].Default = channels[0].Default;
+	//channels[1].value[0] = supla_esp_gpio_relay_on(B_RELAY2_PORT);
+
+	//channels[2].Number = 2;
+	//channels[2].Type = SUPLA_CHANNELTYPE_SENSORNO;
+	//channels[2].FuncList = 0;
+	//channels[2].Default = 0;
+	//channels[2].value[0] = 0;
+
+	//channels[3].Number = 3;
+	//channels[3].Type = SUPLA_CHANNELTYPE_SENSORNO;
+	//channels[3].FuncList = 0;
+	//channels[3].Default = 0;
+	//channels[3].value[0] = 0;
+
+	channels[0].Number = 0;
+	channels[0].Type = SUPLA_CHANNELTYPE_THERMOMETERDS18B20;
+
+	channels[0].FuncList = 0;
+	channels[0].Default = 0;
+
+	supla_get_temperature(channels[0].value);
+	
 	channels[1].Number = 1;
-	channels[1].Type = channels[0].Type;
-	channels[1].FuncList = channels[0].FuncList;
-	channels[1].Default = channels[0].Default;
-	channels[1].value[0] = supla_esp_gpio_relay_on(B_RELAY2_PORT);
-
-	channels[2].Number = 2;
-	channels[2].Type = SUPLA_CHANNELTYPE_SENSORNO;
-	channels[2].FuncList = 0;
-	channels[2].Default = 0;
-	channels[2].value[0] = 0;
-
-	channels[3].Number = 3;
-	channels[3].Type = SUPLA_CHANNELTYPE_SENSORNO;
-	channels[3].FuncList = 0;
-	channels[3].Default = 0;
-	channels[3].value[0] = 0;
-
-	channels[4].Number = 4;
-	channels[4].Type = SUPLA_CHANNELTYPE_THERMOMETERDS18B20;
-
-	channels[4].FuncList = 0;
-	channels[4].Default = 0;
-
-	supla_get_temperature(channels[4].value);
+	channels[1].Type = SUPLA_CHANNELTYPE_DISTANCESENSOR;
 	
-	channels[5].Number = 5;
-	channels[5].Type = SUPLA_CHANNELTYPE_DISTANCESENSOR;
+	channels[1].FuncList = 0;
+	channels[1].Default = 0;
 	
-	channels[5].FuncList = 0;
-	channels[5].Default = 0;
-	
-	supla_get_hc(channels[5].value);
+	supla_get_hc(channels[1].value);
 	
 }
 
 void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc) {
 
-	supla_esp_channel_value_changed(2, gpio__input_get(B_SENSOR_PORT1));
-	supla_esp_channel_value_changed(3, gpio__input_get(B_SENSOR_PORT2));
+//	supla_esp_channel_value_changed(2, gpio__input_get(B_SENSOR_PORT1));
+//	supla_esp_channel_value_changed(3, gpio__input_get(B_SENSOR_PORT2));
 
 }

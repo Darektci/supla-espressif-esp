@@ -29,6 +29,7 @@ extern ETSTimer supla_ds18b20_timer2;
 
 void ICACHE_FLASH_ATTR supla_ds18b20_init(void);
 void supla_get_temperature(char value[SUPLA_CHANNELVALUE_SIZE]);
+void supla_get_temperature2(char value[SUPLA_CHANNELVALUE_SIZE]);
 void supla_ds18b20_start(void);
 #endif
 

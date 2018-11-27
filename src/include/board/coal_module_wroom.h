@@ -16,20 +16,22 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef DIMMER_H_
-#define DIMMER_H_
+#ifndef SUPLA_COAL_MODULE_WROOM_H_
+#define SUPLA_COAL_MODULE_WROOM_H_
 
-#define LED_RED_PORT     5
-#define SUPLA_PWM_COUNT  1
-#define DIMMER_CHANNEL  0
+#define DS18B20
+#define TEMPERATURE_CHANNEL 0
+#define HC
+#define LED_REINIT
+#define DISTANCE_CHANNEL 1
 
-#define PWM_0_OUT_IO_MUX PERIPHS_IO_MUX_MTDO_U
-#define PWM_0_OUT_IO_NUM 15
-#define PWM_0_OUT_IO_FUNC  FUNC_GPIO15
+#if defined(__BOARD_coal_module_wroom)
 
-void ICACHE_FLASH_ATTR supla_esp_board_pwm_init(void);
-char ICACHE_FLASH_ATTR supla_esp_board_set_rgbw_value(int ChannelNumber, int *Color, float *ColorBrightness, float *Brightness);
-void ICACHE_FLASH_ATTR supla_esp_board_get_rgbw_value(int ChannelNumber, int *Color, float *ColorBrightness, float *Brightness);
+	#define LED_GREEN_PORT  12
+	#define LED_BLUE_PORT   14
+
+#endif
+
 void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc);
 
 #endif

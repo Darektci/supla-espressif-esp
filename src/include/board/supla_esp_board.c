@@ -35,6 +35,10 @@
 
 #include "board/gate_module_wroom.c"
 
+#elif defined(__BOARD_coal_module_wroom)    
+
+#include "board/coal_module_wroom.c"
+
 #elif defined(__BOARD_rs_module) \
       || defined(__BOARD_rs_module_wroom)
 

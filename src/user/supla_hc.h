@@ -16,20 +16,25 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#ifndef DIMMER_H_
-#define DIMMER_H_
+#ifndef SUPLA_HC_H_
+#define SUPLA_HC_H_
 
-#define LED_RED_PORT     5
-#define SUPLA_PWM_COUNT  1
-#define DIMMER_CHANNEL  0
+#include "supla_esp.h"
+#include "supla-dev/proto.h"
 
-#define PWM_0_OUT_IO_MUX PERIPHS_IO_MUX_MTDO_U
-#define PWM_0_OUT_IO_NUM 15
-#define PWM_0_OUT_IO_FUNC  FUNC_GPIO15
+#ifdef HC
 
-void ICACHE_FLASH_ATTR supla_esp_board_pwm_init(void);
-char ICACHE_FLASH_ATTR supla_esp_board_set_rgbw_value(int ChannelNumber, int *Color, float *ColorBrightness, float *Brightness);
-void ICACHE_FLASH_ATTR supla_esp_board_get_rgbw_value(int ChannelNumber, int *Color, float *ColorBrightness, float *Brightness);
-void ICACHE_FLASH_ATTR supla_esp_board_send_channel_values_with_delay(void *srpc);
+extern int supla_hc_trig_pin;
+extern int supla_hc_echo_pin;
+
+extern ETSTimer supla_hc_timer1;
+extern ETSTimer supla_hc_timer2;
+
+void ICACHE_FLASH_ATTR supla_hc_init(void);
+//void supla_get_temperature(char value[SUPLA_CHANNELVALUE_SIZE]);
+void supla_get_hc(char value[SUPLA_CHANNELVALUE_SIZE]);
+void supla_hc_start(void);
+//void supla_ds18b20_start(void);
+#endif
 
 #endif

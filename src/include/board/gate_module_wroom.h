@@ -21,12 +21,14 @@
 
 #define DS18B20
 #define TEMPERATURE_CHANNEL 4
+#define HC
 #define LED_REINIT
+#define DISTANCE_CHANNEL 5
 
 #if defined(__BOARD_gate_module_wroom)
 
-	#define LED_GREEN_PORT  5
-	#define LED_BLUE_PORT   12
+	#define LED_GREEN_PORT  12
+	#define LED_BLUE_PORT   14
 
 #else
 

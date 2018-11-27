@@ -34,6 +34,7 @@
 #include "supla_esp_hw_timer.h"
 #include "supla_ds18b20.h"
 #include "supla_dht.h"
+#include "supla_hc.h"
 #include "supla-dev/srpc.h"
 #include "supla-dev/log.h"
 
@@ -1414,7 +1415,7 @@ supla_esp_devconn_timer1_cb(void *timer_arg) {
 	}
 }
 
-#if defined(TEMPERATURE_CHANNEL) || defined(TEMPERATURE_HUMIDITY_CHANNEL)
+#if defined(TEMPERATURE_CHANNEL) || defined(TEMPERATURE_HUMIDITY_CHANNEL) || defined(DISTANCE_CHANNEL)
 
 void DEVCONN_ICACHE_FLASH supla_esp_devconn_on_temp_humidity_changed(char humidity) {
 
@@ -1440,7 +1441,15 @@ void DEVCONN_ICACHE_FLASH supla_esp_devconn_on_temp_humidity_changed(char humidi
 			srpc_ds_async_channel_value_changed(devconn->srpc, TEMPERATURE_HUMIDITY_CHANNEL, value);
 
 		#endif
+ 
+        #if defined(DISTANCE_CHANNEL)
 
+			memset(value, 0, sizeof(SUPLA_CHANNELVALUE_SIZE));
+
+			supla_get_hc(value);
+			srpc_ds_async_channel_value_changed(devconn->srpc, DISTANCE_CHANNEL, value);
+
+		#endif
 
 	}
 
